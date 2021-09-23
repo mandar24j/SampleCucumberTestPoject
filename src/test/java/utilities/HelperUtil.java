@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 public class HelperUtil {
 
-	public static String futurdate(int n) {
+	public static String futureDate(int n) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		Calendar cal = Calendar.getInstance();
 		// Adding N Day to the current date
