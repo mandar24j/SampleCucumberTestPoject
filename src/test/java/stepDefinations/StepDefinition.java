@@ -50,7 +50,7 @@ public class StepDefinition {
 
     @Then("^user verifies new lead \"([^\"]*)\", \"([^\"]*)\"is populated$")
     public void user_verifies_new_lead_is_populated(String firstName, String lastName) throws Throwable {
-        leadDetailsInPega = pegaPage.userVerifiesNewLeadIsPopulatedInPega(firstName, lastName+ subString);
+        leadDetailsInPega = pegaPage.userVerifiesNewLeadIsPopulatedInPega(firstName, lastName + subString);
     }
 
 
@@ -80,8 +80,8 @@ public class StepDefinition {
 
     @After
     public void tearDown(Scenario scenario) {
-        scenario.write("Lead Created : " + leadDetails);
-        scenario.write("Lead Details in l: " + leadDetailsInPega);
+        scenario.write("Lead Created in Appian: " + leadDetails);
+        scenario.write("Lead Details populated in Pega " + leadDetailsInPega);
         if (scenario.isFailed()) {
             // Take a screenshot...
             final byte[] screenshot = ((TakesScreenshot) PreSetup.driver).getScreenshotAs(OutputType.BYTES);
