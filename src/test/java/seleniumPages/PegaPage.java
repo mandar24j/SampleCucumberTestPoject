@@ -66,7 +66,7 @@ public class PegaPage extends BasePage {
 
 
     private String verifyLead(String firstName, String lastName) throws InterruptedException {
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         String actualLeadInPega = dh.getText(leadDetails);
         Assert.assertTrue(actualLeadInPega.contains(firstName));
         Assert.assertTrue(actualLeadInPega.contains(lastName));
