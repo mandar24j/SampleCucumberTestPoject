@@ -22,6 +22,6 @@ import utilities.PreSetup;
                         "junit:target/cucumber-reports/Cucumber.xml"
                 }
         )
-public class SalesOrderManagementSmokeRunner extends PreSetup {
+public class SalesOrderManagementSmokeRunnerTest extends PreSetup {
 
 }
