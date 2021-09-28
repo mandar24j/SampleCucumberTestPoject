@@ -30,7 +30,7 @@ public class LoginPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void userLogin(String loginUser, String loginPassword) {
+    public void userLogin(String loginUser, String loginPassword) throws InterruptedException {
         dh.click(acceptTC);
         wait.until(ExpectedConditions.elementToBeClickable(userName));
         userName.sendKeys(loginUser);

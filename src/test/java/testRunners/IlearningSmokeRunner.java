@@ -22,6 +22,6 @@ import utilities.PreSetup;
                         "junit:target/cucumber-reports/Cucumber.xml"
                 }
         )
-public class IlearningSmoke extends PreSetup {
+public class IlearningSmokeRunner extends PreSetup {
 
 }

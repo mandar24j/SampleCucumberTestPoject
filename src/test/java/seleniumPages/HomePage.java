@@ -95,7 +95,7 @@ public class HomePage extends BasePage {
         endTime.sendKeys(returnTime);
     }
 
-    public void verifyuserGetsAtleasrOneResult() {
+    public void verifyUserGetsAtleastOneResult() {
         findDealButton.click();
         wait.until(ExpectedConditions.visibilityOf(error));
         boolean flag = !(error.getText().toLowerCase().contains(PreSetup.prop.getProperty("errorText")));

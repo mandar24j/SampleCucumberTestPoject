@@ -7,9 +7,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import seleniumPages.CoursesPage;
-import seleniumPages.HomePage;
-import seleniumPages.LoginPage;
+import seleniumPages.*;
 import utilities.PreSetup;
 
 import java.util.Random;
@@ -17,19 +15,44 @@ import java.util.Random;
 public class StepDefinition {
     public String subString;
     HomePage homePage;
+    HomePageOrderManagement homePageOrderManagement;
     LoginPage loginPage;
+    PegaPage pegaPage;
     CoursesPage coursesPage;
-   /* @Before
-    public void login() {
-        loginPage = new LoginPage(PreSetup.driver, PreSetup.wait);
-        loginPage.userLogin(PreSetup.loginUser, PreSetup.loginPassword);
-    }*/
+    Scenario scenario;
+    String leadDetails;
+    String leadDetailsInPega;
 
     @Given("^user is on home page$")
     public void user_is_on_home_page() throws Throwable {
-        homePage = new HomePage(PreSetup.driver, PreSetup.wait);
-        homePage.userIsOnHomePage(PreSetup.appUrl);
+        homePageOrderManagement = new HomePageOrderManagement(PreSetup.driver, PreSetup.wait);
+        homePageOrderManagement.userIsOnHomePage(PreSetup.appUrl);
     }
+
+    @When("^user creates a new lead \"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
+    public void user_creates_a_new_lead(String firstName, String lastName, String ultimateParentAccount, String globalMarket, String accountName, String products, String salesStage, String estContractValue, String dealType, int estimatedDealCloseDate, String industry, String region, String customCategory, String partnerInvolved) throws Throwable {
+        Random random = new Random();
+        subString = String.format("%04d", random.nextInt(10000));
+        homePageOrderManagement.createNewLead(firstName, lastName + subString, ultimateParentAccount, globalMarket, accountName, products, salesStage, estContractValue, dealType, estimatedDealCloseDate, industry, region, customCategory, partnerInvolved);
+    }
+
+    @When("^user verifies the new lead is created successfully \"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
+    public void user_verifies_the_new_lead_is_created_successfully(String accountName, String industry, String dealType, String salesStage) throws Throwable {
+        leadDetails = homePageOrderManagement.verifyNewLeadCreatedSuccessfully(accountName, industry, dealType, salesStage);
+
+    }
+
+    @When("^user login into Pega Application \"([^\"]*)\",\"([^\"]*)\"$")
+    public void userLoginIntoPegaApplication(String userName, String password) throws Throwable {
+        pegaPage = new PegaPage(PreSetup.driver, PreSetup.wait);
+        pegaPage.userLoginPega(userName, password);
+    }
+
+    @Then("^user verifies new lead \"([^\"]*)\", \"([^\"]*)\"is populated$")
+    public void user_verifies_new_lead_is_populated(String firstName, String lastName) throws Throwable {
+        leadDetailsInPega = pegaPage.userVerifiesNewLeadIsPopulatedInPega(firstName, lastName+ subString);
+    }
+
 
     @When("^user creates a new course \"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\"$")
     public void user_creates_a_new_course(String courseName, String status, String priority, String trainer) throws Throwable {
@@ -57,6 +80,8 @@ public class StepDefinition {
 
     @After
     public void tearDown(Scenario scenario) {
+        scenario.write("Lead Created : " + leadDetails);
+        scenario.write("Lead Details in l: " + leadDetailsInPega);
         if (scenario.isFailed()) {
             // Take a screenshot...
             final byte[] screenshot = ((TakesScreenshot) PreSetup.driver).getScreenshotAs(OutputType.BYTES);
@@ -86,7 +111,8 @@ public class StepDefinition {
 
     @Then("^user gets atleast one search result$")
     public void user_gets_atleast_one_search_result() throws Throwable {
-        homePage.verifyuserGetsAtleasrOneResult();
+        homePage.verifyUserGetsAtleastOneResult();
     }
+
 
 }
