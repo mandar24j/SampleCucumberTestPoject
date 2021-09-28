@@ -55,6 +55,7 @@ public class HomePageOrderManagement extends BasePage {
     static WebElement opportunitiesRefreshButton;
     String opportunitiesTable = "//*[text()='OPPORTUNITIES']";
     String opportunitiesFirstRow = "//*[text()='Pega Id']/../../../..//tbody//tr[1]";
+    String pegaIdColumn = "//*[text()='Pega Id']";
     WebDriver driver;
     WebDriverWait wait;
 
@@ -144,12 +145,13 @@ public class HomePageOrderManagement extends BasePage {
     }
 
     public String verifyNewLeadCreatedSuccessfully(String accountName, String industry, String dealType, String salesStage) throws InterruptedException {
-        Thread.sleep(3000);
+        Thread.sleep(1000);
         driver.get(PreSetup.appUrl);
-        Thread.sleep(5000);
+        Thread.sleep(8000);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(pegaIdColumn)));
         //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(opportunitiesTable))));
         dh.moveToElement(driver.findElement(By.xpath(opportunitiesFirstRow)));
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         String firstRow = dh.getText(driver.findElement(By.xpath(opportunitiesFirstRow))).trim();
         System.out.println("************************************ Order Created : " + firstRow);
 
