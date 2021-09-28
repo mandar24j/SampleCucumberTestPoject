@@ -1,5 +1,6 @@
 Feature: Smoke test of Maantic Sales Order Management Application
 
+  @smoke
   Scenario Outline: Create new lead and verify it in Pega
     Given user is on home page
     When user creates a new lead "<firstName>", "<lastName>","<ultimateParentAccount>","<globalMarket>","<accountName>","<products>","<salesStage>","<estContractValue>","<dealType>","<estimatedDealCloseDate>","<industry>","<region>","<customCategory>","<partnerInvolved>"
