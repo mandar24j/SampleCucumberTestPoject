@@ -147,7 +147,7 @@ public class HomePageOrderManagement extends BasePage {
         Thread.sleep(3000);
         driver.get(PreSetup.appUrl);
         Thread.sleep(5000);
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(opportunitiesTable))));
+        //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(opportunitiesTable))));
         dh.moveToElement(driver.findElement(By.xpath(opportunitiesFirstRow)));
         Thread.sleep(3000);
         String firstRow = dh.getText(driver.findElement(By.xpath(opportunitiesFirstRow))).trim();
