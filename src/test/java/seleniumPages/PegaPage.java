@@ -34,6 +34,8 @@ public class PegaPage extends BasePage {
     @FindBy(how = How.XPATH, using = "//*[@data-test-id='20190911130636037429876']")
     static WebElement filterLeadsEnter;
 
+    String leadsFirstRowName = "(//*[@data-test-id='201412160519150793380419'])[1]";
+
     WebDriver driver;
     WebDriverWait wait;
 
@@ -86,9 +88,14 @@ public class PegaPage extends BasePage {
         Thread.sleep(1000);
         dh.sendKeys(filterLeadsInput, lastName + Keys.ENTER);
         Thread.sleep(2000);
-        //dh.click(filterLeadsEnter);
-        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//*[contains(text(),'" + lastName + "')]"))));
-        dh.click(driver.findElement(By.xpath("//*[contains(text(),'" + lastName + "')]")));
+        dh.click(filterLeadsEnter);
+        dh.waitForElement(leadsFirstRowName);
+        dh.click(driver.findElement(By.xpath(leadsFirstRowName)));
+        try {
+            Thread.sleep(2000);
+            dh.click(driver.findElement(By.xpath(leadsFirstRowName)));
+        } catch (Exception ex) {
+        }
 
     }
 }
