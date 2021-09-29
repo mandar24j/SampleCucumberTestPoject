@@ -9,7 +9,7 @@ import utilities.PreSetup;
 @CucumberOptions
         (
                 features = {
-                        "classpath:Features/SalesOrderManagementSmoke.feature"
+                        "classpath:Features/salesOrderManagementSmoke.feature"
                 },
                 glue = "stepDefinations",
                 monochrome = true,
