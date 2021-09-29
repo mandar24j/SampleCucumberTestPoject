@@ -1,5 +1,6 @@
 package utilities;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -112,4 +113,17 @@ public class DriverHelper {
     public void jsClick(WebElement element) {
         js.executeScript("arguments[0].click();", element);
     }
+
+    public void waitForElement(String xpath) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(xpath), 0));
+    }
+
+    public void waitForElement(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+
+    }
+
+
 }
