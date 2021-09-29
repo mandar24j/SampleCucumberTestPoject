@@ -157,9 +157,9 @@ public class HomePageOrderManagement extends BasePage {
 
         //Verify First Row
         Assert.assertTrue("Expected Account name : " + accountName, firstRow.contains(accountName));
-        Assert.assertTrue(firstRow.contains(industry));
-        Assert.assertTrue(firstRow.contains(dealType));
-        Assert.assertTrue(firstRow.contains(salesStage));
+        Assert.assertTrue("Expected Industry : " + industry, firstRow.contains(accountName));
+        Assert.assertTrue("Expected Deal Type : " + dealType, firstRow.contains(accountName));
+        Assert.assertTrue("Expected Sales Stage : " + salesStage, firstRow.contains(accountName));
         return firstRow;
     }
 }
