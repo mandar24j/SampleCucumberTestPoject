@@ -110,6 +110,11 @@ public class DriverHelper {
         driver.switchTo().window(tabs.get(0));
     }
 
+    public void switchToSecondTab() {
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
+    }
+
     public void jsClick(WebElement element) {
         js.executeScript("arguments[0].click();", element);
     }

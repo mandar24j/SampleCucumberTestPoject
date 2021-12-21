@@ -21,6 +21,7 @@ public class PreSetup {
     public static String appUrlPega;
     public static LoginPage loginPage;
     public static LogoutPage logoutPage;
+    public final static int webDriverWait = 30;
 
     static {
         try {
@@ -38,7 +39,7 @@ public class PreSetup {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 30);
+        wait = new WebDriverWait(driver, webDriverWait);
         appUrl = prop.getProperty("appUrl");
         appUrlPega = prop.getProperty("appUrlPega");
         driver.get(appUrl);

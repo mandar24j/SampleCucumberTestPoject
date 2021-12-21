@@ -13,6 +13,7 @@ import utilities.PreSetup;
 import java.util.Random;
 
 public class StepDefinition {
+    static String leadId;
     public String subString;
     HomePage homePage;
     HomePageOrderManagement homePageOrderManagement;
@@ -33,12 +34,13 @@ public class StepDefinition {
     public void user_creates_a_new_lead(String firstName, String lastName, String ultimateParentAccount, String globalMarket, String accountName, String products, String salesStage, String estContractValue, String dealType, int estimatedDealCloseDate, String industry, String region, String customCategory, String partnerInvolved) throws Throwable {
         Random random = new Random();
         subString = String.format("%04d", random.nextInt(10000));
-        homePageOrderManagement.createNewLead(firstName, lastName + subString, ultimateParentAccount, globalMarket, accountName, products, salesStage, estContractValue, dealType, estimatedDealCloseDate, industry, region, customCategory, partnerInvolved);
+        leadId = homePageOrderManagement.createNewLead(firstName, lastName + subString, ultimateParentAccount, globalMarket, accountName, products, salesStage, estContractValue, dealType, estimatedDealCloseDate, industry, region, customCategory, partnerInvolved);
+
     }
 
     @When("^user verifies the new lead is created successfully \"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
     public void user_verifies_the_new_lead_is_created_successfully(String accountName, String industry, String dealType, String salesStage) throws Throwable {
-        leadDetails = homePageOrderManagement.verifyNewLeadCreatedSuccessfully(accountName, industry, dealType, salesStage);
+        leadDetails = homePageOrderManagement.verifyNewLeadCreatedSuccessfully(leadId, accountName, industry, dealType, salesStage);
 
     }
 
@@ -81,7 +83,7 @@ public class StepDefinition {
     @After
     public void tearDown(Scenario scenario) {
         scenario.write("Lead Created in Appian: " + leadDetails);
-        scenario.write("Lead Details populated in Pega " + leadDetailsInPega);
+        //scenario.write("Lead Details populated in Pega " + leadDetailsInPega);
         if (scenario.isFailed()) {
             // Take a screenshot...
             final byte[] screenshot = ((TakesScreenshot) PreSetup.driver).getScreenshotAs(OutputType.BYTES);

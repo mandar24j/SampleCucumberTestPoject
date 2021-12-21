@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.HelperUtil;
-import utilities.PreSetup;
 
 public class HomePageOrderManagement extends BasePage {
     @FindBy(how = How.XPATH, using = "//*[text()='New Lead']")
@@ -53,6 +52,13 @@ public class HomePageOrderManagement extends BasePage {
     static WebElement submitButton;
     @FindBy(how = How.XPATH, using = "(//*[text()='Refresh']/../..)[1]")
     static WebElement opportunitiesRefreshButton;
+    @FindBy(how = How.XPATH, using = "//*[contains(text(),'New Lead')]")
+    static WebElement newLeadId;
+    @FindBy(how = How.XPATH, using = "//*[@placeholder='Search TLUS_OPPORTUNITIES']")
+    static WebElement searchOpportunity;
+    @FindBy(how = How.XPATH, using = "//*[text()='Search']")
+    static WebElement searchButton;
+
     String opportunitiesTable = "//*[text()='OPPORTUNITIES']";
     String opportunitiesFirstRow = "//*[text()='Pega Id']/../../../..//tbody//tr[1]";
     String pegaIdColumn = "//*[text()='Pega Id']";
@@ -78,12 +84,17 @@ public class HomePageOrderManagement extends BasePage {
     }
 
 
-    public void createNewLead(String firstName, String lastName, String ultimateParentAccount, String globalMarket, String accountName, String products, String salesStage, String estContractValue, String dealType, int estimatedDealCloseDate, String industry, String region, String customCategory, String partnerInvolved) throws InterruptedException {
+    public String createNewLead(String firstName, String lastName, String ultimateParentAccount, String globalMarket, String accountName, String products, String salesStage, String estContractValue, String dealType, int estimatedDealCloseDate, String industry, String region, String customCategory, String partnerInvolved) throws InterruptedException {
         clickNewLeadButton();
+        dh.switchToSecondTab();
+        String leadId = "";
+        leadId = dh.getText(newLeadId).trim().split(" ")[2];
         enterLeadDetails(firstName, lastName, ultimateParentAccount, globalMarket, accountName, products, salesStage, estContractValue, dealType, estimatedDealCloseDate);
         enterOtherDetails(industry, region, customCategory, partnerInvolved);
         reviewAndSubmitLead();
         Thread.sleep(2000);
+        System.out.println("New Lead Created with ID>> " + leadId);
+        return leadId;
     }
 
     private void clickNewLeadButton() throws InterruptedException {
@@ -102,8 +113,9 @@ public class HomePageOrderManagement extends BasePage {
         selectDropdown(salesStageDropdown, salesStage);
         dh.sendKeys(estContractValueInput, estContractValue);
         selectDropdown(dealTypeDropdown, dealType);
-        dh.sendKeys(estimatedDealCloseDateInput, HelperUtil.futureDate(estimatedDealCloseDate));
-        dh.click(estimatedDealCloseDateText);
+        dh.sendKeys(estimatedDealCloseDateInput, HelperUtil.futureDate(estimatedDealCloseDate) + "\t");
+        Thread.sleep(500);
+        //dh.click(estimatedDealCloseDateText);
         dh.click(nextButton);
         dh.click(nextButton);
     }
@@ -144,22 +156,36 @@ public class HomePageOrderManagement extends BasePage {
         element.sendKeys(Keys.ENTER);
     }
 
-    public String verifyNewLeadCreatedSuccessfully(String accountName, String industry, String dealType, String salesStage) throws InterruptedException {
-        Thread.sleep(1000);
-        driver.get(PreSetup.appUrl);
-        Thread.sleep(8000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(pegaIdColumn)));
-        //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(opportunitiesTable))));
-        dh.moveToElement(driver.findElement(By.xpath(opportunitiesFirstRow)));
-        Thread.sleep(2000);
-        String firstRow = dh.getText(driver.findElement(By.xpath(opportunitiesFirstRow))).trim();
-        System.out.println("************************************ Order Created : " + firstRow);
+    public String verifyNewLeadCreatedSuccessfully(String leadId, String accountName, String industry, String dealType, String salesStage) throws InterruptedException {
+        String firstRow = "";
+        try {
+            Thread.sleep(1000);
+            //driver.get(PreSetup.appUrl);
+            //Thread.sleep(8000);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(pegaIdColumn)));
+            dh.sendKeys(searchOpportunity, leadId);
+            dh.click(searchButton);
+            Thread.sleep(1000);
+            dh.click(searchButton);
+            Thread.sleep(3000);
+            //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(opportunitiesTable))));
+            //dh.moveToElement(driver.findElement(By.xpath(opportunitiesFirstRow)));
+            dh.scrollBy(0, 1000);
+            Thread.sleep(3000);
+            firstRow = dh.getText(driver.findElement(By.xpath(opportunitiesFirstRow))).trim();
+            //System.out.println("************************************ Order Created : " + firstRow);
 
-        //Verify First Row
-        Assert.assertTrue("Expected Account name : " + accountName, firstRow.contains(accountName));
-        Assert.assertTrue("Expected Industry : " + industry, firstRow.contains(accountName));
-        Assert.assertTrue("Expected Deal Type : " + dealType, firstRow.contains(accountName));
-        Assert.assertTrue("Expected Sales Stage : " + salesStage, firstRow.contains(accountName));
-        return firstRow;
+            //Verify First Row
+            Assert.assertTrue("Expected Lead ID : " + leadId, firstRow.contains(leadId));
+            Assert.assertTrue("Expected Account name : " + accountName, firstRow.contains(accountName));
+            Assert.assertTrue("Expected Industry : " + industry, firstRow.contains(accountName));
+            Assert.assertTrue("Expected Deal Type : " + dealType, firstRow.contains(accountName));
+            Assert.assertTrue("Expected Sales Stage : " + salesStage, firstRow.contains(accountName));
+        } finally {
+            driver.close();
+            dh.switchToFirstTab();
+            return firstRow;
+        }
+
     }
 }
