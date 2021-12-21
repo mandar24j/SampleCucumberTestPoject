@@ -31,6 +31,7 @@ public class LoginPage extends BasePage {
     }
 
     public void userLogin(String loginUser, String loginPassword) throws InterruptedException {
+        wait.until(ExpectedConditions.elementToBeClickable(acceptTC));
         dh.click(acceptTC);
         wait.until(ExpectedConditions.elementToBeClickable(userName));
         userName.sendKeys(loginUser);

@@ -5,8 +5,8 @@ Feature: Smoke test of Maantic Sales Order Management Application
     Given user is on home page
     When user creates a new lead "<firstName>", "<lastName>","<ultimateParentAccount>","<globalMarket>","<accountName>","<products>","<salesStage>","<estContractValue>","<dealType>","<estimatedDealCloseDate>","<industry>","<region>","<customCategory>","<partnerInvolved>"
     Then user verifies the new lead is created successfully "<accountName>", "<industry>","<dealType>","<salesStage>"
-    When user login into Pega Application "<pegaUser>","<pegaPassword>"
-    Then user verifies new lead "<firstName>", "<lastName>"is populated
+#    When user login into Pega Application "<pegaUser>","<pegaPassword>"
+#    Then user verifies new lead "<firstName>", "<lastName>"is populated
 
     Examples:
       | firstName | lastName | ultimateParentAccount | globalMarket | accountName | products                          | salesStage | estContractValue | dealType | estimatedDealCloseDate | industry   | region | customCategory | partnerInvolved | pegaUser | pegaPassword |
