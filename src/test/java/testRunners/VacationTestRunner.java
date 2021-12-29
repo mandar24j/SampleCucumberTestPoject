@@ -1,9 +1,7 @@
 package testRunners;
 
-import org.junit.runner.RunWith;
-import cucumber.api.junit.Cucumber;
-import utilities.PreSetup;
 import cucumber.api.CucumberOptions;
+import utilities.PreSetup;
 
 //@RunWith(Cucumber.class)
 @CucumberOptions
