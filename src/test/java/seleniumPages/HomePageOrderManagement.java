@@ -158,34 +158,31 @@ public class HomePageOrderManagement extends BasePage {
 
     public String verifyNewLeadCreatedSuccessfully(String leadId, String accountName, String industry, String dealType, String salesStage) throws InterruptedException {
         String firstRow = "";
-        try {
-            Thread.sleep(1000);
-            //driver.get(PreSetup.appUrl);
-            //Thread.sleep(8000);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(pegaIdColumn)));
-            dh.sendKeys(searchOpportunity, leadId);
-            dh.click(searchButton);
-            Thread.sleep(1000);
-            dh.click(searchButton);
-            Thread.sleep(3000);
-            //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(opportunitiesTable))));
-            //dh.moveToElement(driver.findElement(By.xpath(opportunitiesFirstRow)));
-            dh.scrollBy(0, 1000);
-            Thread.sleep(3000);
-            firstRow = dh.getText(driver.findElement(By.xpath(opportunitiesFirstRow))).trim();
-            //System.out.println("************************************ Order Created : " + firstRow);
+        Thread.sleep(1000);
+        //driver.get(PreSetup.appUrl);
+        //Thread.sleep(8000);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(pegaIdColumn)));
+        dh.sendKeys(searchOpportunity, leadId);
+        dh.click(searchButton);
+        Thread.sleep(1000);
+        dh.click(searchButton);
+        Thread.sleep(3000);
+        //wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(opportunitiesTable))));
+        //dh.moveToElement(driver.findElement(By.xpath(opportunitiesFirstRow)));
+        dh.scrollBy(0, 1000);
+        Thread.sleep(3000);
+        firstRow = dh.getText(driver.findElement(By.xpath(opportunitiesFirstRow))).trim();
+        //System.out.println("************************************ Order Created : " + firstRow);
 
-            //Verify First Row
-            Assert.assertTrue("Expected Lead ID : " + leadId, firstRow.contains(leadId));
-            Assert.assertTrue("Expected Account name : " + accountName, firstRow.contains(accountName));
-            Assert.assertTrue("Expected Industry : " + industry, firstRow.contains(accountName));
-            Assert.assertTrue("Expected Deal Type : " + dealType, firstRow.contains(accountName));
-            Assert.assertTrue("Expected Sales Stage : " + salesStage, firstRow.contains(accountName));
-        } finally {
-            driver.close();
-            dh.switchToFirstTab();
-            return firstRow;
-        }
+        //Verify First Row
+        Assert.assertTrue("Expected Lead ID : " + leadId, firstRow.contains(leadId));
+        Assert.assertTrue("Expected Account name : " + accountName, firstRow.contains(accountName));
+        Assert.assertTrue("Expected Industry : " + industry, firstRow.contains(accountName));
+        Assert.assertTrue("Expected Deal Type : " + dealType, firstRow.contains(accountName));
+        Assert.assertTrue("Expected Sales Stage : " + salesStage, firstRow.contains(accountName));
 
+        driver.close();
+        dh.switchToFirstTab();
+        return firstRow;
     }
 }
