@@ -1,10 +1,10 @@
 package utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeSuite;
 import seleniumPages.LoginPage;
 import seleniumPages.LogoutPage;
 
@@ -21,7 +21,7 @@ public class PreSetup {
     public static String appUrlPega;
     public static LoginPage loginPage;
     public static LogoutPage logoutPage;
-    public final static int webDriverWait = 30;
+    public final static int webDriverWait = 15;
 
     static {
         try {
@@ -33,7 +33,6 @@ public class PreSetup {
         }
     }
 
-    @BeforeClass
     public static void launchApp() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
@@ -49,7 +48,7 @@ public class PreSetup {
         loginPage.userLogin(PreSetup.loginUser, PreSetup.loginPassword);
     }
 
-    //@AfterClass
+
     public static void logout() {
         logoutPage = new LogoutPage(PreSetup.driver, PreSetup.wait);
         logoutPage.logout();

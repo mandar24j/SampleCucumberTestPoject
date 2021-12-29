@@ -1,11 +1,14 @@
 package testRunners;
 
 import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
-import org.junit.runner.RunWith;
+import cucumber.api.testng.AbstractTestNGCucumberTests;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import utilities.PreSetup;
 
-@RunWith(Cucumber.class)
+import static utilities.PreSetup.launchApp;
+
+//@RunWith(Cucumber.class)
 @CucumberOptions
         (
                 features = {
@@ -22,6 +25,7 @@ import utilities.PreSetup;
                         "junit:target/cucumber-reports/Cucumber.xml"
                 }
         )
-public class SalesOrderManagementSmokeRunnerTest extends PreSetup {
 
+@Test
+public class SalesOrderManagementSmokeRunnerTest extends AbstractTestNGCucumberTests {
 }

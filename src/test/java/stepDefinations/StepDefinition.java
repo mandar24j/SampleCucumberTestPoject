@@ -2,6 +2,7 @@ package stepDefinations;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,6 +12,8 @@ import seleniumPages.*;
 import utilities.PreSetup;
 
 import java.util.Random;
+
+import static utilities.PreSetup.*;
 
 public class StepDefinition {
     static String leadId;
@@ -23,6 +26,12 @@ public class StepDefinition {
     Scenario scenario;
     String leadDetails;
     String leadDetailsInPega;
+
+    @Before
+    public void setupMethod() throws InterruptedException {
+        new PreSetup();
+        launchApp();
+    }
 
     @Given("^user is on home page$")
     public void user_is_on_home_page() throws Throwable {
@@ -89,6 +98,8 @@ public class StepDefinition {
             final byte[] screenshot = ((TakesScreenshot) PreSetup.driver).getScreenshotAs(OutputType.BYTES);
             scenario.embed(screenshot, "image/png"); // ... and embed it in the report.
         }
+        logout();
+        driver.quit();
     }
 
     @When("^user navigate to Vacation tab$")

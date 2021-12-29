@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SanityTests" verbose="0" parallel="classes" thread-count="1" configfailurepolicy="continue">
+
+    <listeners>
+        <listener class-name="utilities.AnnotationTransformer"/>
+    </listeners>
+
+    <test name="SanityTests" enabled="true">
+        <classes>
+            <class name="testRunners.SalesOrderManagementSmokeRunnerTest"></class>
+        </classes>
+    </test>
+</suite>
